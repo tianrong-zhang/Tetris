@@ -8,34 +8,34 @@ CBlock::CBlock()
 {
     if (imgs[0] == NULL) {
         IMAGE imgTmp;
-        //¼ÓÔØ·½¿éÍ¼Æ¬
+        //åŠ è½½æ–¹å—å›¾ç‰‡
         loadimage(&imgTmp, "res/tiles.png");
-        //ÉèÖÃ»æÍ¼Ä¿±êÎªimgTmp¶ÔÏó
+        //è®¾ç½®ç»˜å›¾ç›®æ ‡ä¸ºimgTmpå¯¹è±¡
         SetWorkingImage(&imgTmp);
 
         for (int i = 0; i < 7; ++i) {
             imgs[i] = new IMAGE;
-            //ÇĞ¸î·½¿é
+            //åˆ‡å‰²æ–¹å—
             getimage(imgs[i], i * size, 0, size, size);
         }
-        //ÉèÖÃ»æÍ¼Ä¿±êÎª»æÍ¼´°¿Ú
+        //è®¾ç½®ç»˜å›¾ç›®æ ‡ä¸ºç»˜å›¾çª—å£
         SetWorkingImage();
     }
 
     int blocks[7][4] = {
         {1, 3, 5, 7},   // I
-        {2, 4, 5, 7},   // Z 1ĞÍ
-        {3, 5, 4, 6},   // Z 2ĞÍ
+        {2, 4, 5, 7},   // Z 1å‹
+        {3, 5, 4, 6},   // Z 2å‹
         {3, 5, 4, 7},   // T
         {2, 3, 5, 7},   // L
         {3, 5, 7, 6},   // J
-        {2, 3, 4, 5}    // Ìï
+        {2, 3, 4, 5}    // ç”°
     };
 
-    //Ëæ»úÉú³ÉÒ»ÖÖ¶íÂŞË¹·½¿é
+    //éšæœºç”Ÿæˆä¸€ç§ä¿„ç½—æ–¯æ–¹å—
     blockType = rand() % 7 + 1;
 
-    //³õÊ¼»¯smallBlocks
+    //åˆå§‹åŒ–smallBlocks
     for (int i = 0; i < 4; ++i) {
         int value = blocks[blockType - 1][i];
         smallBlocks[i].row = value / 2;
@@ -112,12 +112,13 @@ bool CBlock::blockInMap(const std::vector<std::vector<int>>& map)
             return false;
         }
     }
+    return true;
 }
 
 void CBlock::solidify(std::vector<std::vector<int>>& map)
 {
     for (int i = 0; i < 4; ++i) {
-        //ÉèÖÃ±ê¼Ç£¬¹Ì»¯¶ÔÓ¦µÄÎ»ÖÃ
+        //è®¾ç½®æ ‡è®°ï¼Œå›ºåŒ–å¯¹åº”çš„ä½ç½®
         map[smallBlocks[i].row][smallBlocks[i].col] = blockType;
     }
 }
